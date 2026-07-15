@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
 from mkdocs.structure.files import File
 
@@ -9,13 +10,26 @@ from .slide_parser import SlideParser
 
 
 class SlidesPlugin(BasePlugin):
+    config_scheme = (
+        ('font_size', config_options.Type(str, default='32px')),
+        ('template', config_options.Type(str, default='')),
+    )
+
     def __init__(self):
         self.parser = SlideParser()
         self.renderer = SlideRenderer()
-        self.slides_to_write = []  # Store slide HTML content to write during build
+        self.slides_to_write = []
 
     def on_config(self, config):
         """Set up the plugin configuration"""
+        if self.config.get('template'):
+            template_path = os.path.join(
+                os.path.dirname(config['docs_dir']),
+                self.config['template']
+            )
+            self.parser.set_template(template_path)
+        if self.config.get('font_size'):
+            self.parser.set_config({'font_size': self.config['font_size']})
         return config
 
     def on_files(self, files, config):
@@ -68,16 +82,16 @@ class SlidesPlugin(BasePlugin):
             # Process markdown and collect slides
             processed_markdown = self.parser.process_markdown(
                 markdown,
-                page.file.src_path,
+                page,
                 config,
-                self.slides_to_write,  # Pass list to collect slides
             )
 
             if "```slides" in markdown:
-                # Only inject CSS/JS if the page contains slides
+                import time
+                v = int(time.time())
                 page.head_extra = [
-                    '<link rel="stylesheet" href="/assets/slides/css/slides.css">',
-                    '<script src="/assets/slides/js/slides.js"></script>',
+                    f'<link rel="stylesheet" href="/assets/slides/css/slides.css?v={v}">',
+                    f'<script src="/assets/slides/js/slides.js?v={v}"></script>',
                 ]
             return processed_markdown
         except Exception as e:

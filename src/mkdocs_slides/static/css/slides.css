@@ -1,3 +1,17 @@
+/* Google Sans Font Stack */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&family=Roboto+Mono:wght@400;500&display=swap');
+
+/* Black & White Color Palette */
+:root {
+    --slide-primary: #1F1F1F;
+    --slide-secondary: #666666;
+    --slide-surface: #FFFFFF;
+    --slide-surface-variant: #F5F5F5;
+    --slide-on-surface: #000000;
+    --slide-on-surface-variant: #666666;
+    --slide-outline: #CCCCCC;
+}
+
 /* Container for the entire slide deck */
 .slides-deck {
     position: relative;
@@ -29,14 +43,134 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    
-    /* Make padding proportional to height */
-    --padding-ratio: 0.06;  /* 6% of container height */
-    padding: calc(100% * var(--padding-ratio));
+    justify-content: flex-start;
+    background: var(--slide-surface);
+    padding: 40px 60px;
+    font-family: 'Google Sans Text', 'Google Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: var(--slide-font-size, 16px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--slide-on-surface);
+    overflow: hidden;
 }
+
+.slide h1 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1.8em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5em 0;
+    line-height: 1.2;
+    color: var(--slide-primary);
+}
+
+.slide h2 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1.3em;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0.8em 0 0.4em 0;
+    line-height: 1.3;
+    color: var(--slide-primary);
+}
+
+.slide h3 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin: 0.6em 0 0.3em 0;
+    line-height: 1.4;
+    color: var(--slide-secondary);
+}
+
+.slide p {
+    margin: 0 0 0.8em 0;
+    line-height: 1.5;
+    color: var(--slide-on-surface);
+}
+
+.slide ul, .slide ol {
+    margin: 0.6em 0 0.8em 0;
+    padding-left: 1.5em;
+}
+
+.slide li {
+    margin-bottom: 0.4em;
+    line-height: 1.5;
+    color: var(--slide-on-surface);
+}
+
+.slide li::marker {
+    color: var(--slide-primary);
+}
+
+.slide pre {
+    margin: 1em 0;
+    padding: 1.2em;
+    background: var(--slide-surface-variant);
+    border-radius: 8px;
+    font-size: 0.65em;
+    line-height: 1.4;
+    overflow-x: auto;
+    border: 1px solid var(--slide-outline);
+}
+
+.slide code {
+    font-family: 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+}
+
+.slide p code, .slide li code {
+    background: var(--slide-surface-variant);
+    color: var(--slide-primary);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.85em;
+    border: 1px solid var(--slide-outline);
+}
+
+.slide strong, .slide b {
+    font-weight: 700;
+    color: var(--slide-primary);
+}
+
+.slide a {
+    color: var(--slide-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.slide blockquote {
+    margin: 1em 0;
+    padding: 0.8em 1.2em;
+    border-left: 4px solid var(--slide-primary);
+    background: var(--slide-surface-variant);
+    color: var(--slide-on-surface-variant);
+}
+
+.slide table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 0.9em;
+}
+
+.slide th {
+    background: var(--slide-primary);
+    color: var(--slide-surface);
+    font-weight: 500;
+    padding: 0.6em 0.8em;
+    text-align: left;
+}
+
+.slide td {
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--slide-outline);
+}
+
+.slide tr:hover {
+    background: var(--slide-surface-variant);
+}
+
 
 /* Fullscreen mode with calculated dimensions */
 .slides-deck.fullscreen {
@@ -47,48 +181,48 @@
     height: 100vh;
     margin: 0;
     padding: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: black;
     z-index: 9999;
-    
-    /* Center the viewport */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* In native fullscreen, the deck IS the viewport */
+.slides-deck:fullscreen {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: black;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 /* Viewport scales while maintaining aspect ratio */
-.slides-deck.fullscreen .slides-viewport {
-    /* Calculate the maximum dimensions that fit in the viewport while maintaining 16:9 */
+.slides-deck.fullscreen .slides-viewport,
+.slides-deck:fullscreen .slides-viewport {
     --max-width: min(100vw, calc(100vh * 16/9));
     --max-height: min(100vh, calc(100vw * 9/16));
-    
     width: var(--max-width);
     height: var(--max-height);
-    
-    /* This creates the "picture frame" effect */
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-    
-    /* Maintain position */
+    border-radius: 0;
+    box-shadow: none;
     position: relative;
     overflow: hidden;
 }
 
-/* Scale slide content relative to viewport */
-.slides-deck.fullscreen .slide {
-    /* Base font size on viewport height */
-    --base-size: calc(var(--max-height) * 0.025);  /* 2.5% of viewport height */
-    font-size: var(--base-size);
-    
-    /* Scale padding proportionally */
-    padding: calc(var(--max-height) * var(--padding-ratio));
-    
-    /* Ensure content stays centered */
+/* Scale slide content in fullscreen */
+.slides-deck.fullscreen .slide,
+.slides-deck:fullscreen .slide {
+    font-size: 1.8vh;
+    padding: 4vh 6vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 /* Scale text elements relative to base font size */
@@ -202,7 +336,7 @@
 
 /* Maintain consistent sizing in fullscreen */
 .slides-deck.fullscreen .slide {
-    font-size: calc(var(--base-font-size) * 1.2);
+    font-size: calc(var(--slide-font-size, 16px) * 1.2);
 }
 
 /* Make content fill available space but not overflow */
@@ -215,30 +349,6 @@
     align-items: center;
     overflow: auto;
     padding: 2em;
-}
-
-/* Adjust heading sizes relative to container */
-.slide h1 {
-    font-size: min(4vw, 2.5em);
-    margin-bottom: 0.5em;
-}
-
-.slide h2 {
-    font-size: min(3vw, 2em);
-    margin-bottom: 0.5em;
-}
-
-/* Scale lists and text content */
-.slide ul, .slide ol {
-    font-size: min(2.5vw, 1.2em);
-    width: 80%;
-    margin: 0.5em auto;
-}
-
-.slide p {
-    font-size: min(2.5vw, 1.2em);
-    width: 80%;
-    margin: 0.5em auto;
 }
 
 /* Controls container - make it more subtle and consistent */
@@ -307,7 +417,6 @@
 }
 
 /* Overview and fullscreen buttons */
-.overview-toggle,
 .fullscreen-toggle {
     font-size: 20px !important;  /* Force consistent size */
     padding: 0.5rem !important;
@@ -350,7 +459,7 @@
     }
 
     .slides-deck.fullscreen .slide h2 { 
-        font-size: min(5vh, 2em);
+        font-size: min(4vh, 1.5em);
         margin-bottom: 0.3em;
         text-align: center;
     }
@@ -478,111 +587,6 @@
 .slides-deck.fullscreen .slides-controls .slide-progress {
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Overview mode */
-.slides-overview {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90vw;  /* Take up most but not all of viewport */
-    height: 80vh;  /* Leave some space at top and bottom */
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    overflow-y: auto;  /* Enable vertical scrolling */
-}
-
-/* Dim the background when overview is active */
-.slides-deck.overview-active::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-.slides-deck.overview-active .slides-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 25px;
-    align-items: start;
-}
-
-/* Add a close button */
-.overview-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: white;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px 10px;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
-
-.overview-close:hover {
-    opacity: 1;
-}
-
-/* Style scrollbar for overview */
-.slides-overview::-webkit-scrollbar {
-    width: 8px;
-}
-
-.slides-overview::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-.slides-overview::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-.slides-overview::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.overview-slide {
-    position: relative;
-    aspect-ratio: 16/9;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.overview-slide:hover {
-    transform: scale(1.05);
-}
-
-.overview-slide iframe {
-    width: 100%;
-    height: 100%;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    pointer-events: none;
-    background: white;
-}
-
-.overview-number {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 12px;
 }
 
 /* Ensure controls stay visible */

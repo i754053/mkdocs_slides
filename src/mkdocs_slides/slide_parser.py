@@ -177,33 +177,19 @@ class SlideParser:
             html += '</div>'
         html += '</div>'
 
-        # Overview grid
-        html += '<div class="slides-overview">'
-        html += '<button class="overview-close" title="Close overview (Esc)">×</button>'
-        for i, slide in enumerate(slides):
-            html += f'<div class="overview-slide" data-index="{i}">'
-            html += slide['content']  # Use content directly instead of iframe
-            html += f'<span class="overview-number">{i + 1}</span>'
-            html += '</div>'
-        html += '</div>'
-
-        # Controls (unchanged)
+        # Controls
         html += '<div class="slides-controls">'
         html += '<div class="nav-controls">'
         html += '<button class="prev-slide" title="Previous (← Left arrow)">←</button>'
         html += f'<span class="slide-progress">1 / {len(slides)}</span>'
         html += '<button class="next-slide" title="Next (→ Right arrow)">→</button>'
         html += '</div>'
-        html += '<div class="button-group">'
-        html += '<button class="overview-toggle" title="Toggle overview (O)">⊞</button>'
         html += '<button class="fullscreen-toggle" title="Toggle fullscreen">⛶</button>'
         html += '</div>'
-        html += '</div>'
 
-        # Mobile controls (unchanged)
+        # Mobile controls
         html += '<div class="mobile-nav">'
         html += '<button class="mobile-prev">←</button>'
-        html += '<button class="mobile-overview">⊞</button>'
         html += '<button class="mobile-next">→</button>'
         html += '</div>'
         html += '<button class="mobile-close">×</button>'
